@@ -9,8 +9,6 @@ const $quoteMessage = $(`#quote`);
 const $regroup = $(`#regroup`);
 const $copyQuote = $(`#copy-quote`);
 
-
-
 const callToApi = async () => {
     return new Promise(async (resolve, reject) => {
         const apiOptions = {
@@ -40,7 +38,7 @@ const callToApi = async () => {
 const getFamousQuote = async () => {
     return new Promise(async (resolve, reject) => {
         $quoteMessage.innerHTML = `Searching information...`;
-        let quoteInformation = await callToApi();
+        let quoteInformation = await callToApi().catch((error) => console.log(error));
         let { content: quote, originator: { name: author }, tags } = quoteInformation;
         resolve([author, quote, tags])
     })
@@ -49,7 +47,7 @@ const getFamousQuote = async () => {
 const getInspirationalQuote = async () => {
     return new Promise(async (resolve, reject) => {
         $quoteMessage.innerHTML = `Searching information...`;
-        let quoteInformation = await callToApi();
+        let quoteInformation = await callToApi().catch((error) => console.log(error));
 
         let { content: quote, originator: { name: author }, tags } = quoteInformation;
         let validation = new Set([...tags]);
@@ -58,7 +56,6 @@ const getInspirationalQuote = async () => {
             resolve([author, quote, tags]);
 
         } else {
-            console.log(validation);
             setTimeout(async () => {
                 resolve(getInspirationalQuote());
             }, 3000)
@@ -76,13 +73,14 @@ const placeInfoInBody = async (functionToExecute) => {
     }, 1000)
 }
 
-
 $famousQuoteBtn.addEventListener(`click`, (ev) => {
-    placeInfoInBody(getFamousQuote())
+    $authorName.innerHTML = "";
+    placeInfoInBody(getFamousQuote());
 });
 
 $inspirationalQuoteBtn.addEventListener(`click`, (ev) => {
-    placeInfoInBody(getInspirationalQuote())
+    $authorName.innerHTML = "";
+    placeInfoInBody(getInspirationalQuote());
 });
 
 $copyQuote.addEventListener(`click`, () => {
@@ -92,7 +90,5 @@ $copyQuote.addEventListener(`click`, () => {
 })
 
 $regroup.addEventListener(`click`, (ev) => {
-    navigator.clipboard.writeText(`github.com/VicTech444/Random-Quote-Generator`);
-})
-
-
+    window.open(`https://github.com/VicTech444/Random-Quote-Generator`);
+});
