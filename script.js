@@ -8,6 +8,7 @@ const $inspirationalQuoteBtn = $(`#inspirational-quote`);
 const $quoteMessage = $(`#quote`);
 const $regroup = $(`#regroup`);
 const $copyQuote = $(`#copy-quote`);
+const $clipBoardMessage = $(`#clipboard-message`);
 
 const callToApi = async () => {
     return new Promise(async (resolve, reject) => {
@@ -86,6 +87,8 @@ $inspirationalQuoteBtn.addEventListener(`click`, (ev) => {
 $copyQuote.addEventListener(`click`, () => {
     if($authorName.textContent != ""){
         navigator.clipboard.writeText(`${$quoteMessage.textContent} ~${$authorName.textContent}`);
+        $clipBoardMessage.textContent = "Copied to the clipboard";
+        setTimeout(() => $clipBoardMessage.textContent = "", 3000);
     }
 })
 

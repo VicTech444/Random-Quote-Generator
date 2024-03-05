@@ -77,6 +77,12 @@ body {
     }
 }
 
+.clipboard-notification{
+    text-align: center;
+    color: #97A3B6;
+    aspect-ratio: 1 / 0.055;
+}
+
 .button-options {
     display: flex;
     width: fit-content;
